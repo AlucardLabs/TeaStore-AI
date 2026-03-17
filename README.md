@@ -77,11 +77,9 @@ scripts/stop-full-stack.sh --volumes
 #### Legacy TeaStore
 - **[TeaStore Overview](docs/TEASTORE_LEGACY.md)** - Original TeaStore documentation
 - **[Detailed Deployment Guide](docs/GET_STARTED.md)** - TeaStore deployment options
-- **[CLAUDE.md](CLAUDE.md)** - Development guide for working with TeaStore code
 
 #### AI Capabilities
 - **[AI Capabilities Overview](docs/AI_CAPABILITIES.md)** - AI stack architecture and services
-- **[AI Development Guide](ai-capabilities/CLAUDE.md)** - Detailed AI services documentation
 
 ### Integration
 - **[Integration Architecture](docs/FULL_STACK.md#architecture)** - How TeaStore and AI services work together
@@ -297,43 +295,13 @@ scripts/start-full-stack.sh
 
 ---
 
-## 📖 Research & Publications
-
-### Original TeaStore
-
-The TeaStore was first published at MASCOTS 2018:
-
-```bibtex
-@inproceedings{KiEiScBaGrKo2018-MASCOTS-TeaStore,
-  author = {Kistowski, J{\'o}akim von and Eismann, Simon and Schmitt, Norbert and Bauer, Andr{\'e} and Grohmann, Johannes and Kounev, Samuel},
-  title = {{TeaStore: A Micro-Service Reference Application for Benchmarking, Modeling and Resource Management Research}},
-  booktitle = {Proceedings of the 26th IEEE International Symposium on the Modelling, Analysis, and Simulation of Computer and Telecommunication Systems},
-  series = {MASCOTS '18},
-  year = {2018},
-  month = {September},
-  location = {Milwaukee, WI, USA},
-}
-```
-
-See [TEASTORE_LEGACY.md](docs/TEASTORE_LEGACY.md) for complete citation list.
-
-### TeaStore-AI Integration
+## TeaStore-AI Integration
 
 This enhanced version demonstrates:
 - Cross-language microservices integration (Java ↔ Python)
 - Vector embeddings in e-commerce applications
 - LLM-powered natural language interfaces
 - Unified orchestration of heterogeneous service stacks
-
----
-
-## 🤝 Contributing
-
-When contributing:
-1. Follow existing code patterns (see [CLAUDE.md](CLAUDE.md) for TeaStore, [ai-capabilities/CLAUDE.md](ai-capabilities/CLAUDE.md) for AI)
-2. Maintain separation between TeaStore and AI services
-3. Update relevant documentation
-4. Test the full stack integration
 
 ---
 
@@ -357,7 +325,6 @@ Apache 2.0 (same as original TeaStore)
 TeaStore-AI/
 ├── README.md                        # This file
 ├── docs/FULL_STACK.md                    # Complete deployment guide
-├── CLAUDE.md                        # TeaStore development guide
 ├── docker-compose.yaml              # Full stack orchestration
 ├── docs/                            # Documentation
 │   ├── TEASTORE_LEGACY.md          # Original TeaStore README

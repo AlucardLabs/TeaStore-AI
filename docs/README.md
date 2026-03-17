@@ -18,10 +18,6 @@ This folder contains detailed documentation for TeaStore-AI components.
 - Start here: [../README.md](../README.md) - Project overview and quick start
 - Then read: [FULL_STACK.md](FULL_STACK.md) - Complete deployment guide
 
-**For Developers**:
-- TeaStore: [../CLAUDE.md](../CLAUDE.md) - Development guide for Java services
-- AI Services: [../ai-capabilities/CLAUDE.md](../ai-capabilities/CLAUDE.md) - Development guide for Python services
-
 **For Deployment**:
 - Simple: [GET_STARTED.md](GET_STARTED.md) - Traditional TeaStore deployment
 - Full Stack: [FULL_STACK.md](FULL_STACK.md) - Unified deployment (TeaStore + AI)
@@ -79,10 +75,6 @@ Where to go based on your need:
 🚀 "I want to deploy and run it"
    → FULL_STACK.md (unified deployment)
    → GET_STARTED.md (traditional TeaStore only)
-
-💻 "I want to develop/modify code"
-   → ../CLAUDE.md (TeaStore Java development)
-   → ../ai-capabilities/CLAUDE.md (AI Python development)
 
 🧪 "I want to test/benchmark"
    → GET_STARTED.md (load testing section)

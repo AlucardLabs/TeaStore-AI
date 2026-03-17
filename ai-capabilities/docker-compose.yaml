@@ -1,11 +1,11 @@
 version: '3.8'
-name: 'microservices-ai-capabilities'
+name: 'teastore-ai'
 
 services:
   # Qdrant Vector Database
   qdrant:
     image: qdrant/qdrant:v1.7.0
-    container_name: microservices-ai-capabilities-qdrant
+    container_name: teastore-ai-qdrant
     ports:
       - "6333:6333"
       - "6334:6334"
@@ -25,7 +25,7 @@ services:
     build:
       context: .
       dockerfile: services/search-service/Dockerfile
-    container_name: microservices-ai-capabilities-search
+    container_name: teastore-ai-search
     ports:
       - "8001:8001"
     environment:
@@ -54,7 +54,7 @@ services:
     build:
       context: .
       dockerfile: services/indexer-service/Dockerfile
-    container_name: microservices-ai-capabilities-indexer
+    container_name: teastore-ai-indexer
     ports:
       - "8002:8002"
     environment:
@@ -85,7 +85,7 @@ services:
     build:
       context: .
       dockerfile: services/ai-orchestrator/Dockerfile
-    container_name: microservices-ai-capabilities-orchestrator
+    container_name: teastore-ai-orchestrator
     ports:
       - "8003:8003"
     environment:
@@ -111,7 +111,7 @@ services:
   # Ollama - Local LLM Service
   ollama:
     image: ollama/ollama:latest
-    container_name: microservices-ai-capabilities-ollama
+    container_name: teastore-ai-ollama
     ports:
       - "11434:11434"
     volumes:
@@ -131,7 +131,7 @@ services:
     build:
       context: .
       dockerfile: services/ai-gateway/Dockerfile
-    container_name: microservices-ai-capabilities-gateway
+    container_name: teastore-ai-gateway
     ports:
       - "8000:8000"
     environment:
@@ -160,3 +160,5 @@ networks:
 volumes:
   qdrant_storage:
   ollama_models:
+    external: true
+    name: microservices-ai-capabilities_ollama_models

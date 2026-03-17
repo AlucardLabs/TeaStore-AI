@@ -36,6 +36,11 @@
 		<env-entry-type>java.lang.String</env-entry-type>
 		<env-entry-value>http://host.docker.internal:8000/api/v1/search</env-entry-value>
 	</env-entry>
+	<env-entry>
+		<env-entry-name>intelligentGatewayURL</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>http://host.docker.internal:8000/api/v1/intelligent</env-entry-value>
+	</env-entry>
 	<error-page>
 		<location>/error</location>
 	</error-page>

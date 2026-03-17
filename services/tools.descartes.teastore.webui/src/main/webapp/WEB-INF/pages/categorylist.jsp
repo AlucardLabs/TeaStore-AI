@@ -5,6 +5,9 @@
 		<a href="<c:url value="/semanticsearch" />" class="btn btn-primary btn-block">
 			<span class="glyphicon glyphicon-search"></span> Semantic Search
 		</a>
+		<a href="<c:url value="/aichat" />" class="btn btn-success btn-block" style="margin-top: 10px;">
+			<span class="glyphicon glyphicon-comment"></span> AI Chat Assistant
+		</a>
 	</div>
 
 	<h3>Categories</h3>

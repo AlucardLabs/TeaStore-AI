@@ -1,0 +1,36 @@
+# TeaStore AI - Full Stack Orchestration
+#
+# This is a wrapper compose file that combines:
+# - TeaStore services (examples/docker/docker-compose_default.yaml)
+# - AI Capabilities (ai-capabilities/docker-compose.yaml)
+#
+# Usage:
+#   docker-compose -f docker-compose.yaml \
+#                  -f examples/docker/docker-compose_default.yaml \
+#                  -f ai-capabilities/docker-compose.yaml \
+#                  up -d
+#
+# Or use the convenience script:
+#   ./start-full-stack.sh
+
+version: '3.8'
+
+# This file serves as documentation and can include overrides
+# The actual services are defined in the included files
+
+services:
+  # Override webui to ensure AI services are available
+  # This adds a dependency on ai-gateway
+  webui:
+    depends_on:
+      - registry
+      - persistence
+      - auth
+      - image
+      - recommender
+      - ai-gateway  # Added dependency on AI service
+
+networks:
+  # Shared network for both stacks
+  default:
+    name: teastore-ai-network

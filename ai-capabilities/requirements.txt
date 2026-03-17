@@ -1,0 +1,13 @@
+# Shared dependencies for all services
+# Each service also has its own requirements.txt for specific dependencies
+
+# Core
+pydantic==2.5.3
+pydantic-settings==2.1.0
+python-dotenv==1.0.0
+
+# HTTP
+httpx==0.26.0
+
+# Logging
+structlog==24.1.0

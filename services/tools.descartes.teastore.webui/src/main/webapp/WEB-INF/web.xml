@@ -31,6 +31,11 @@
 		<env-entry-type>java.lang.String</env-entry-type>
 		<env-entry-value>http://localhost:8080/tools.descartes.teastore.registry/rest/services/</env-entry-value>
 	</env-entry>
+	<env-entry>
+		<env-entry-name>aiGatewayURL</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>http://host.docker.internal:8000/api/v1/search</env-entry-value>
+	</env-entry>
 	<error-page>
 		<location>/error</location>
 	</error-page>

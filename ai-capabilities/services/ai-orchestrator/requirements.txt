@@ -1,0 +1,17 @@
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+
+# LangChain ecosystem
+langchain==0.1.0
+langgraph==0.0.20
+langchain-community==0.0.10
+langchain-core==0.1.10
+
+# HTTP and validation
+httpx==0.26.0
+pydantic==2.5.3
+pydantic-settings==2.1.0
+python-dotenv==1.0.0
+
+# Logging
+structlog==24.1.0

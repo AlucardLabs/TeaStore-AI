@@ -1,0 +1,162 @@
+version: '3.8'
+name: 'microservices-ai-capabilities'
+
+services:
+  # Qdrant Vector Database
+  qdrant:
+    image: qdrant/qdrant:v1.7.0
+    container_name: microservices-ai-capabilities-qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_storage:/qdrant/storage
+    networks:
+      - ai_network
+    healthcheck:
+      test: ["CMD-SHELL", "timeout 1 bash -c '</dev/tcp/localhost/6333' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # Search Service - Embeddings and Vector Search
+  search-service:
+    build:
+      context: .
+      dockerfile: services/search-service/Dockerfile
+    container_name: microservices-ai-capabilities-search
+    ports:
+      - "8001:8001"
+    environment:
+      - QDRANT_HOST=qdrant
+      - QDRANT_PORT=6333
+      - QDRANT_COLLECTION=products
+      - EMBEDDING_MODEL=all-MiniLM-L6-v2
+      - VECTOR_DIMENSION=384
+      - LOG_LEVEL=INFO
+      - LOG_FORMAT=json
+    depends_on:
+      qdrant:
+        condition: service_healthy
+    networks:
+      - ai_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+
+  # Indexer Service - Product Indexing
+  indexer-service:
+    build:
+      context: .
+      dockerfile: services/indexer-service/Dockerfile
+    container_name: microservices-ai-capabilities-indexer
+    ports:
+      - "8002:8002"
+    environment:
+      - QDRANT_HOST=qdrant
+      - QDRANT_PORT=6333
+      - QDRANT_COLLECTION=products
+      - SEARCH_SERVICE_URL=http://search-service:8001
+      - BATCH_SIZE=32
+      - LOG_LEVEL=INFO
+      - LOG_FORMAT=json
+    depends_on:
+      qdrant:
+        condition: service_healthy
+      search-service:
+        condition: service_healthy
+    networks:
+      - ai_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8002/health"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+    restart: unless-stopped
+
+  # AI Orchestrator - LangChain/LangGraph Workflows
+  ai-orchestrator:
+    build:
+      context: .
+      dockerfile: services/ai-orchestrator/Dockerfile
+    container_name: microservices-ai-capabilities-orchestrator
+    ports:
+      - "8003:8003"
+    environment:
+      - SEARCH_SERVICE_URL=http://search-service:8001
+      - INDEXER_SERVICE_URL=http://indexer-service:8002
+      - LOG_LEVEL=INFO
+      - LOG_FORMAT=json
+    depends_on:
+      search-service:
+        condition: service_healthy
+      indexer-service:
+        condition: service_healthy
+    networks:
+      - ai_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8003/health"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+    restart: unless-stopped
+
+  # Ollama - Local LLM Service
+  ollama:
+    image: ollama/ollama:latest
+    container_name: microservices-ai-capabilities-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_models:/root/.ollama
+    networks:
+      - ai_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    restart: unless-stopped
+
+  # AI Gateway - Unified API Entry Point
+  ai-gateway:
+    build:
+      context: .
+      dockerfile: services/ai-gateway/Dockerfile
+    container_name: microservices-ai-capabilities-gateway
+    ports:
+      - "8000:8000"
+    environment:
+      - ORCHESTRATOR_SERVICE_URL=http://ai-orchestrator:8003
+      - SEARCH_SERVICE_URL=http://search-service:8001
+      - OLLAMA_URL=http://ollama:11434
+      - LOG_LEVEL=INFO
+      - LOG_FORMAT=json
+    depends_on:
+      ai-orchestrator:
+        condition: service_healthy
+    networks:
+      - ai_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+    restart: unless-stopped
+
+networks:
+  ai_network:
+    driver: bridge
+
+volumes:
+  qdrant_storage:
+  ollama_models:

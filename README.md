@@ -189,15 +189,6 @@ scripts/status.sh
    - "relaxing tea" → finds chamomile, lavender, etc.
    - "morning energy" → finds caffeinated breakfast teas
 
-### Load Testing
-
-TeaStore supports multiple load testing tools:
-- **LIMBO HTTP Load Generator** (recommended)
-- **JMeter**
-- **Locust**
-
-See [GET_STARTED.md](docs/GET_STARTED.md) for load testing details.
-
 ---
 
 ## 📊 Monitoring
@@ -219,17 +210,6 @@ curl http://localhost:6333/health  # Qdrant
 - **Qdrant Dashboard**: http://localhost:6333/dashboard
 - **AI Gateway Swagger**: http://localhost:8000/docs
 - **Search Service Swagger**: http://localhost:8001/docs
-
-### Kieker Monitoring
-
-TeaStore supports Kieker instrumentation for distributed tracing:
-
-```bash
-# Start with Kieker monitoring
-docker-compose -f examples/docker/docker-compose_kieker.yaml up -d
-```
-
-See [GET_STARTED.md](docs/GET_STARTED.md) for Kieker setup details.
 
 ---
 

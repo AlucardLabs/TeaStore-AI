@@ -12,6 +12,7 @@ An enhanced version of the TeaStore microservices reference application with int
 
 ### What's New
 - **Semantic Search**: AI-powered product search using vector embeddings (sentence-transformers)
+- **AI Chat Assistant**: Conversational interface with intent detection and natural language understanding
 - **Natural Language Interface**: Query products using conversational language
 - **Unified Orchestration**: Single command to start the full stack (TeaStore + AI)
 - **Reusability Demonstration**: AI services integrate seamlessly with existing TeaStore components
@@ -43,16 +44,27 @@ This single command:
 
 - **TeaStore WebUI**: http://localhost:8080/tools.descartes.teastore.webui/
 - **Semantic Search**: http://localhost:8080/tools.descartes.teastore.webui/semanticsearch
+- **AI Chat Assistant**: http://localhost:8080/tools.descartes.teastore.webui/aichat
 - **AI Gateway API**: http://localhost:8000/docs
 - **Qdrant Dashboard**: http://localhost:6333/dashboard
 
-### Try Semantic Search
+### Try AI Features
 
-Navigate to the Semantic Search page and try queries like:
-- "organic green tea"
-- "relaxing herbal blend"
-- "morning energy tea"
-- "tea for digestion"
+**Semantic Search** (vector-based product search):
+- Navigate to http://localhost:8080/tools.descartes.teastore.webui/semanticsearch
+- Try queries like:
+  - "organic green tea"
+  - "relaxing herbal blend"
+  - "morning energy tea"
+  - "tea for digestion"
+
+**AI Chat Assistant** (conversational interface with intent detection):
+- Navigate to http://localhost:8080/tools.descartes.teastore.webui/aichat
+- Chat naturally with the AI:
+  - "Show me organic green teas"
+  - "I want something relaxing for bedtime"
+  - "What's the price of Earl Grey?"
+  - "Find me cheap herbal teas under $15"
 
 ### Stop Everything
 
@@ -108,14 +120,21 @@ scripts/stop-full-stack.sh --volumes
 - `ollama` - Local LLM (llama3.2 for intent detection)
 - `ai-gateway` - Unified API with Track 1 (direct) and Track 2 (intelligent) endpoints
 
-### Integration Point
+### Integration Points
 
-The WebUI's `SemanticSearchServlet` calls the AI Gateway at:
+The WebUI integrates with AI services via two servlets:
+
+**1. SemanticSearchServlet** (Track 1 - Direct Search):
 ```
 http://host.docker.internal:8000/api/v1/search
 ```
 
-This demonstrates cross-stack service communication using Docker networking.
+**2. AIChatServlet** (Track 2 - Intelligent Gateway):
+```
+http://host.docker.internal:8000/api/v1/intelligent
+```
+
+This demonstrates cross-stack service communication using Docker networking and showcases both direct API integration and LLM-powered intelligent routing.
 
 ---
 
